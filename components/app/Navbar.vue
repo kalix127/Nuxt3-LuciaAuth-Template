@@ -25,14 +25,14 @@
           <li><NuxtLink to="/">Home</NuxtLink></li>
           <li>
             <a
-              href="https://github.com/GianlucaIavicoli/Nuxt3-LuciaAuth-Template#features"
+              href="https://github.com/kalix127/Nuxt3-LuciaAuth-Template#features"
               target="_blank"
               >Features</a
             >
           </li>
           <li>
             <a
-              href="https://github.com/GianlucaIavicoli/Nuxt3-LuciaAuth-Template"
+              href="https://github.com/kalix127/Nuxt3-LuciaAuth-Template"
               target="_blank"
               >Documentation</a
             >
@@ -48,14 +48,14 @@
         <li><NuxtLink to="/">Home</NuxtLink></li>
         <li>
           <a
-            href="https://github.com/GianlucaIavicoli/Nuxt3-LuciaAuth-Template#features"
+            href="https://github.com/kalix127/Nuxt3-LuciaAuth-Template#features"
             target="_blank"
             >Features</a
           >
         </li>
         <li>
           <a
-            href="https://github.com/GianlucaIavicoli/Nuxt3-LuciaAuth-Template"
+            href="https://github.com/kalix127/Nuxt3-LuciaAuth-Template"
             target="_blank"
             >Documentation</a
           >

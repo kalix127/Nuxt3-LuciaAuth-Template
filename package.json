@@ -6,13 +6,13 @@
   "description": "A Nuxt.js Authentication template (login, register, email validation, reset password and oauth) using Lucia-Auth, Prisma, PostgreSQL and Mailtrap.",
   "author": "Gianluca Iavicoli <info@gianlucaiavicoli.dev>",
   "license": "MIT",
-  "homepage": "https://github.com/GianlucaIavicoli/Nuxt3-LuciaAuth-Template",
+  "homepage": "https://github.com/kalix127/Nuxt3-LuciaAuth-Template",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GianlucaIavicoli/Nuxt3-LuciaAuth-Template.git"
+    "url": "git+https://github.com/kalix127/Nuxt3-LuciaAuth-Template.git"
   },
   "bugs": {
-    "url": "https://github.com/GianlucaIavicoli/Nuxt3-LuciaAuth-Template/issues"
+    "url": "https://github.com/kalix127/Nuxt3-LuciaAuth-Template/issues"
   },
   "scripts": {
     "build": "prisma generate && nuxt build",

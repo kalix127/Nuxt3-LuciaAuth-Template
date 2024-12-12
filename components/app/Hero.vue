@@ -39,7 +39,7 @@
         </div>
         <div class="flex w-full items-center justify-center gap-4">
           <a
-            href="https://github.com/GianlucaIavicoli/Nuxt3-LuciaAuth-Template"
+            href="https://github.com/kalix127/Nuxt3-LuciaAuth-Template"
             target="_blank"
             class="btn btn-primary btn-neutral"
           >
@@ -59,7 +59,7 @@
 import { useClipboard, usePermission } from "@vueuse/core";
 
 const input = ref(
-  "git clone https://github.com/GianlucaIavicoli/Nuxt3-LuciaAuth-Template.git",
+  "git clone https://github.com/kalix127/Nuxt3-LuciaAuth-Template.git",
 );
 const { copy } = useClipboard();
 

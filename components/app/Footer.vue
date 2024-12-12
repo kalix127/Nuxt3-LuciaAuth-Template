@@ -5,7 +5,7 @@
         <Icon name="mdi:code-json" size="20" />
         Built by
         <a
-          href="https://github.com/GianlucaIavicoli"
+          href="https://github.com/kalix127"
           target="_blank"
           class="link"
           >Gianluca Iavicoli</a
