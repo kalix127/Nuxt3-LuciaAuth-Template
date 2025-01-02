@@ -2,6 +2,7 @@
 
 A Nuxt.js Authentication template (login, register, email validation, reset password and oauth) using Lucia-Auth, Prisma, PostgreSQL and Mailtrap.
 
+**Note:** Please be aware that Lucia-Auth is scheduled to be deprecated in March 2025. For more details, refer to [Lucia-Auth Deprecation Discussion](https://github.com/lucia-auth/lucia/discussions/1714).
 
 ## Tech Stack:
 
