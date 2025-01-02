@@ -1,8 +1,8 @@
 {
   "name": "nuxt3-lucia-auth-template",
+  "type": "module",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "description": "A Nuxt.js Authentication template (login, register, email validation, reset password and oauth) using Lucia-Auth, Prisma, PostgreSQL and Mailtrap.",
   "author": "Gianluca Iavicoli <info@gianlucaiavicoli.dev>",
   "license": "MIT",
@@ -28,7 +28,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@iconify-json/line-md": "^1.1.39",
@@ -58,5 +60,9 @@
     "vee-validate": "^4.13.2",
     "vue": "latest",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.12.1",
+    "eslint-plugin-tailwindcss": "^3.17.5"
   }
 }

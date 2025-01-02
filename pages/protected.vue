@@ -1,33 +1,35 @@
 <script lang="ts" setup>
 definePageMeta({
-  middleware: ["protected"],
+  middleware: ['protected'],
 });
 
 useSeoMeta({
-  title: "Protected - User Info",
-  description: "User information",
+  title: 'Protected - User Info',
+  description: 'User information',
 });
 
 const user = useAuthenticatedUser();
 
 async function logout() {
-  await $fetch("/api/auth/logout", {
-    method: "POST",
+  await $fetch('/api/auth/logout', {
+    method: 'POST',
   });
-  await navigateTo("/");
+  await navigateTo('/');
 }
 </script>
 
 <template>
   <div class="card min-w-56 bg-base-200 shadow-xl">
     <div class="card-body">
-      <h2 class="card-title justify-center text-center">User info:</h2>
+      <h2 class="card-title justify-center text-center">
+        User info:
+      </h2>
       <div class="flex flex-col gap-4 rounded-md px-2 py-4">
         <img
           :src="user.avatarUrl ? user.avatarUrl : '/img/user.png'"
           :alt="user.username"
           class="size-20 rounded-full"
-        />
+        >
         <p>ID: {{ user.id }}</p>
         <p>Display name: {{ user.displayName }}</p>
         <p>Username: {{ user.username }}</p>
@@ -48,7 +50,9 @@ async function logout() {
         </p>
       </div>
       <div class="card-actions justify-start">
-        <button @click.prevent="logout" class="btn btn-primary">Logout</button>
+        <button class="btn btn-primary" @click.prevent="logout">
+          Logout
+        </button>
       </div>
     </div>
   </div>

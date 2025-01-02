@@ -1,13 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2024-04-03",
+  compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   ssr: true,
 
   app: {
     head: {
       htmlAttrs: {
-        lang: "en",
+        lang: 'en',
       },
     },
   },
@@ -31,6 +31,6 @@ export default defineNuxtConfig({
     companyContactEmail: process.env.COMPANY_CONTACT_EMAIL,
   },
 
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/icon"],
-  css: ["~/assets/css/main.css"],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/icon'],
+  css: ['~/assets/css/main.css'],
 });

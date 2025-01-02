@@ -1,12 +1,12 @@
+<script lang="ts" setup>
+import { SpeedInsights } from '@vercel/speed-insights/nuxt';
+</script>
+
 <template>
-  <div class="grid min-h-[100vh] place-content-center">
+  <div class="grid min-h-screen place-content-center">
     <slot />
-    <SpeedInsights/>
+    <SpeedInsights />
   </div>
 </template>
-
-<script lang="ts" setup>
-import { SpeedInsights } from "@vercel/speed-insights/nuxt";
-</script>
 
 <style></style>

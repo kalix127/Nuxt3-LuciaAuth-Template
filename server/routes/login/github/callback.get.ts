@@ -1,6 +1,6 @@
-import { generateIdFromEntropySize } from "lucia";
-import { OAuth2RequestError } from "arctic";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
+import { OAuth2RequestError } from 'arctic';
+import { generateIdFromEntropySize } from 'lucia';
 
 const prisma = new PrismaClient();
 
@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const code = query.code?.toString() ?? null;
   const state = query.state?.toString() ?? null;
-  const storedState = getCookie(event, "github_oauth_state") ?? null;
+  const storedState = getCookie(event, 'github_oauth_state') ?? null;
   if (!code || !state || !storedState || state !== storedState) {
     throw createError({
       status: 400,
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const tokens = await github.validateAuthorizationCode(code);
-    const githubUserResponse = await fetch("https://api.github.com/user", {
+    const githubUserResponse = await fetch('https://api.github.com/user', {
       headers: {
         Authorization: `Bearer ${tokens.accessToken}`,
       },
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
 
     // Fetch the user's email from GitHub
     const githubEmailResponse = await fetch(
-      "https://api.github.com/user/emails",
+      'https://api.github.com/user/emails',
       {
         headers: { Authorization: `Bearer ${tokens.accessToken}` },
       },
@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
 
     // Get the primary email from the GitHub user
     const githubUserEmails = await githubEmailResponse.json();
-    const primaryEmail = githubUserEmails.find((email) => email.primary);
+    const primaryEmail = githubUserEmails.find(email => email.primary);
 
     // Check if a user with the same email already exists
     const existingUser = await prisma.user.findUnique({
@@ -64,10 +64,10 @@ export default defineEventHandler(async (event) => {
       const session = await lucia.createSession(existingUser.id, {});
       appendHeader(
         event,
-        "Set-Cookie",
+        'Set-Cookie',
         lucia.createSessionCookie(session.id).serialize(),
       );
-      return sendRedirect(event, "/");
+      return sendRedirect(event, '/');
     }
 
     // If GitHubUser does not exist, create a new user and GitHubUser
@@ -79,7 +79,7 @@ export default defineEventHandler(async (event) => {
         id: userId,
         avatarUrl: githubUser.avatar_url,
         displayName: githubUser.name ? githubUser.name : githubUser.login,
-        username: username,
+        username,
         email: primaryEmail.email.toLowerCase(),
       },
     });
@@ -95,24 +95,24 @@ export default defineEventHandler(async (event) => {
     const session = await lucia.createSession(newUser.id, {});
     appendHeader(
       event,
-      "Set-Cookie",
+      'Set-Cookie',
       lucia.createSessionCookie(session.id).serialize(),
     );
-    return sendRedirect(event, "/protected");
+    return sendRedirect(event, '/protected');
   } catch (e) {
     if (
-      e instanceof OAuth2RequestError &&
-      e.message === "bad_verification_code"
+      e instanceof OAuth2RequestError
+      && e.message === 'bad_verification_code'
     ) {
       // invalid code
       throw createError({
         status: 400,
-        message: "Invalid code",
+        message: 'Invalid code',
       });
     }
     throw createError({
       status: 500,
-      message: "Internal Server Error",
+      message: 'Internal Server Error',
     });
   }
 });

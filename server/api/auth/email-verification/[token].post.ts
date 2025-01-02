@@ -1,8 +1,5 @@
-import { isWithinExpirationDate } from "oslo";
-import { hash } from "@node-rs/argon2";
-import { sha256 } from "oslo/crypto";
-import { encodeHex } from "oslo/encoding";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
+import { isWithinExpirationDate } from 'oslo';
 
 const prisma = new PrismaClient();
 
@@ -23,9 +20,9 @@ export default defineEventHandler(async (event) => {
   if (!token || !isWithinExpirationDate(token.expiresAt)) {
     throw createError({
       statusCode: 400,
-      message: "Token is invalid or expired",
+      message: 'Token is invalid or expired',
       data: {
-        token: "Token is invalid or expired",
+        token: 'Token is invalid or expired',
       },
     });
   }
@@ -55,7 +52,7 @@ export default defineEventHandler(async (event) => {
   const session = await lucia.createSession(userId, {});
   appendHeader(
     event,
-    "Set-Cookie",
+    'Set-Cookie',
     lucia.createSessionCookie(session.id).serialize(),
   );
 

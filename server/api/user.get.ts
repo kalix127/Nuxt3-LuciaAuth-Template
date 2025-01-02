@@ -1,3 +1,3 @@
 export default defineEventHandler((event) => {
-	return event.context.user;
+  return event.context.user;
 });

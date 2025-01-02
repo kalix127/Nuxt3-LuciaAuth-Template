@@ -1,6 +1,6 @@
-import { verify } from "@node-rs/argon2";
-import { PrismaClient } from "@prisma/client";
-import { loginValidationSchema } from "~/validations/auth";
+import { verify } from '@node-rs/argon2';
+import { PrismaClient } from '@prisma/client';
+import { loginValidationSchema } from '~/validations/auth';
 
 const prisma = new PrismaClient();
 
@@ -11,13 +11,13 @@ export default eventHandler(async (event) => {
 
   // Check for validation errors
   if (validatedData.errors.length > 0) {
-    let newErrors: Record<string, string> = {};
+    const newErrors: Record<string, string> = {};
     validatedData.errors.forEach((error: any) => {
       newErrors[error.path] = error.errors[0];
     });
     return {
       statusCode: 400,
-      message: "Validation failed",
+      message: 'Validation failed',
       data: newErrors,
     };
   }
@@ -32,10 +32,10 @@ export default eventHandler(async (event) => {
   });
   if (!existingUser) {
     throw createError({
-      message: "Email not registered",
+      message: 'Email not registered',
       statusCode: 400,
       data: {
-        email: "Email not registered",
+        email: 'Email not registered',
       },
     });
   }
@@ -49,10 +49,10 @@ export default eventHandler(async (event) => {
 
   if (!validPassword) {
     throw createError({
-      message: "Incorrect password",
+      message: 'Incorrect password',
       statusCode: 400,
       data: {
-        password: "Incorrect password",
+        password: 'Incorrect password',
       },
     });
   }
@@ -60,7 +60,7 @@ export default eventHandler(async (event) => {
   const session = await lucia.createSession(existingUser.id, {});
   appendHeader(
     event,
-    "Set-Cookie",
+    'Set-Cookie',
     lucia.createSessionCookie(session.id).serialize(),
   );
 });

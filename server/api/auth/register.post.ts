@@ -1,8 +1,7 @@
-import { hash } from "@node-rs/argon2";
-import { generateIdFromEntropySize } from "lucia";
-import { PrismaClient } from "@prisma/client";
-import { z } from "zod";
-import { registerValidationSchema } from "~/validations/auth";
+import { hash } from '@node-rs/argon2';
+import { PrismaClient } from '@prisma/client';
+import { generateIdFromEntropySize } from 'lucia';
+import { registerValidationSchema } from '~/validations/auth';
 
 const prisma = new PrismaClient();
 
@@ -13,13 +12,13 @@ export default eventHandler(async (event) => {
 
   // Check for validation errors
   if (validatedData.errors.length > 0) {
-    let newErrors: Record<string, string> = {};
+    const newErrors: Record<string, string> = {};
     validatedData.errors.forEach((error: any) => {
       newErrors[error.path] = error.errors[0];
     });
     throw createError({
       statusCode: 400,
-      message: "Validation failed",
+      message: 'Validation failed',
       data: newErrors,
     });
   }
@@ -30,16 +29,16 @@ export default eventHandler(async (event) => {
   // Check if username already exists
   const usernameExists = await prisma.user.findFirst({
     where: {
-      username: username,
+      username,
     },
   });
 
   if (usernameExists) {
     throw createError({
-      message: "Username already registered",
+      message: 'Username already registered',
       statusCode: 400,
       data: {
-        username: "Username already registered",
+        username: 'Username already registered',
       },
     });
   }
@@ -47,15 +46,15 @@ export default eventHandler(async (event) => {
   // Check if email already exists
   const emailExists = await prisma.user.findUnique({
     where: {
-      email: email,
+      email,
     },
   });
   if (emailExists) {
     throw createError({
-      message: "Email already registered",
+      message: 'Email already registered',
       statusCode: 400,
       data: {
-        email: "Email already registered",
+        email: 'Email already registered',
       },
     });
   }
@@ -82,7 +81,7 @@ export default eventHandler(async (event) => {
 
   if (!user) {
     throw createError({
-      message: "Failed to create user",
+      message: 'Failed to create user',
       statusCode: 500,
     });
   }
@@ -90,11 +89,11 @@ export default eventHandler(async (event) => {
   const session = await lucia.createSession(user.id, {});
   appendHeader(
     event,
-    "Set-Cookie",
+    'Set-Cookie',
     lucia.createSessionCookie(session.id).serialize(),
   );
 
   return {
     ok: true,
-  }
+  };
 });

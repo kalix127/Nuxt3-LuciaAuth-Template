@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { SpeedInsights } from "@vercel/speed-insights/nuxt";
+import { SpeedInsights } from '@vercel/speed-insights/nuxt';
 </script>
 
 <template>
   <div class="wrapper">
     <AppNavbar />
-    <main class="grid h-full place-content-center py-10 px-4">
+    <main class="grid h-full place-content-center px-4 py-10">
       <slot />
     </main>
     <AppFooter />
