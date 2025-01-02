@@ -22,7 +22,6 @@ export default antfu({
       order: ['script', 'template', 'style'],
     }],
     'vue/no-v-for-template-key': 'off',
-    'vue/multi-word-component-names': 'off',
     'tailwind/classnames-order': ['warn'],
     'tailwind/enforces-negative-arbitrary-values': ['warn'],
     'tailwind/enforces-shorthand': ['error'],
