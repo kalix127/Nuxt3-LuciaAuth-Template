@@ -14,6 +14,15 @@
   "bugs": {
     "url": "https://github.com/kalix127/Nuxt3-LuciaAuth-Template/issues"
   },
+  "keywords": [
+    "nuxt3",
+    "lucia",
+    "auth",
+    "template",
+    "prisma",
+    "postgresql",
+    "mailtrap"
+  ],
   "scripts": {
     "build": "prisma generate && nuxt build",
     "dev": "nuxt dev",
