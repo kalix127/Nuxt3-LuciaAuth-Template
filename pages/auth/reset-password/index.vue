@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import { useForm, useField } from "vee-validate";
-import { sendResetPasswordValidationSchema } from "~/validations/auth";
-import type { SendResetPasswordFormData } from "~/validations/auth";
+import type { SendResetPasswordFormData } from '~/validations/auth';
+import { useField, useForm } from 'vee-validate';
+import { sendResetPasswordValidationSchema } from '~/validations/auth';
 
 definePageMeta({
-  layout: "auth",
+  layout: 'auth',
 });
 
 useHead({
-  title: "Reset password",
+  title: 'Reset password',
   meta: [
     {
-      name: "description",
-      content: "Reset password",
+      name: 'description',
+      content: 'Reset password',
     },
   ],
 });
@@ -21,7 +21,7 @@ const { handleSubmit, errors, setErrors } = useForm({
   validationSchema: sendResetPasswordValidationSchema,
 });
 
-const { value: email } = useField("email");
+const { value: email } = useField('email');
 const isLoading = ref(false);
 const isResetPasswordSent = ref(false);
 
@@ -29,11 +29,11 @@ const onSubmit = handleSubmit(async (values: SendResetPasswordFormData) => {
   isLoading.value = true;
   try {
     // If validation passes, send the request
-    const response: Response = await $fetch("/api/auth/reset-password", {
-      method: "POST",
+    await $fetch('/api/auth/reset-password', {
+      method: 'POST',
       body: values,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
@@ -50,11 +50,11 @@ const onSubmit = handleSubmit(async (values: SendResetPasswordFormData) => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 py-16" v-if="!isResetPasswordSent">
+  <div v-if="!isResetPasswordSent" class="flex flex-col gap-4 py-16">
     <h1 class="mb-2 text-center text-3xl font-bold text-white">
       Reset Password
     </h1>
-    <form @submit.prevent="onSubmit" class="flex flex-col gap-2">
+    <form class="flex flex-col gap-2" @submit.prevent="onSubmit">
       <label class="form-control w-full max-w-xs">
         <div class="label">
           <span class="label-text">Email</span>
@@ -68,7 +68,7 @@ const onSubmit = handleSubmit(async (values: SendResetPasswordFormData) => {
             placeholder="example@example.com"
             class="grow"
             :disabled="isLoading"
-          />
+          >
         </div>
         <div class="label">
           <span class="label-text-alt w-full text-sm text-red-500">
@@ -83,17 +83,19 @@ const onSubmit = handleSubmit(async (values: SendResetPasswordFormData) => {
         :disabled="isLoading"
       >
         Continue
-        <Icon name="line-md:loading-twotone-loop" size="24" v-if="isLoading" />
+        <Icon v-if="isLoading" name="line-md:loading-twotone-loop" size="24" />
       </button>
     </form>
 
     <p class="text-muted-foreground text-center text-sm">
       Have you remembered your password?
-      <NuxtLink href="/auth/login" class="link link-primary font-bold">Login now</NuxtLink>
+      <NuxtLink href="/auth/login" class="link link-primary font-bold">
+        Login now
+      </NuxtLink>
     </p>
   </div>
 
-  <div class="flex flex-col gap-4 max-w-sm py-16 px-4" v-else>
+  <div v-else class="flex max-w-sm flex-col gap-4 px-4 py-16">
     <h1 class="mb-2 text-center text-3xl font-bold text-white">
       Reset Password
     </h1>
@@ -103,7 +105,9 @@ const onSubmit = handleSubmit(async (values: SendResetPasswordFormData) => {
     </p>
     <p class="text-muted-foreground text-center text-sm">
       Have you remembered your password?
-      <NuxtLink href="/auth/login" class="link link-primary font-bold">Login now</NuxtLink>
+      <NuxtLink href="/auth/login" class="link link-primary font-bold">
+        Login now
+      </NuxtLink>
     </p>
   </div>
 </template>

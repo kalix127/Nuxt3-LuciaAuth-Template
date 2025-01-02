@@ -1,3 +1,22 @@
+<script lang="ts" setup>
+import { useClipboard } from '@vueuse/core';
+
+const input = ref(
+  'git clone https://github.com/kalix127/Nuxt3-LuciaAuth-Template.git',
+);
+const { copy } = useClipboard();
+
+const copied = ref(false);
+
+function handleCopy() {
+  copy(input.value);
+  copied.value = true;
+  setTimeout(() => {
+    copied.value = false;
+  }, 1000);
+}
+</script>
+
 <template>
   <div class="hero">
     <div class="hero-content text-center">
@@ -17,24 +36,24 @@
         </p>
         <div class="flex w-full items-center justify-center gap-4">
           <input
+            v-model="input"
             aria-label="Git clone command"
             :disabled="true"
-            v-model="input"
             type="text"
             class="custom-disabled input input-bordered input-primary w-full"
-          />
+          >
           <button
             aria-label="Copy git clone command"
             class="btn btn-neutral"
-            @click="handleCopy"
             :disabled="copied"
+            @click="handleCopy"
           >
             <Icon
               v-if="!copied"
               name="material-symbols:content-copy-outline-rounded"
               size="22"
             />
-            <Icon name="lets-icons:done-round" size="22" v-else />
+            <Icon v-else name="lets-icons:done-round" size="22" />
           </button>
         </div>
         <div class="flex w-full items-center justify-center gap-4">
@@ -44,35 +63,15 @@
             class="btn btn-primary btn-neutral"
           >
             <Icon name="mdi:github" size="24" />
-            Github</a
-          >
-          <NuxtLink to="/auth/login" class="btn btn-primary"
-            >Get Started</NuxtLink
-          >
+            Github</a>
+          <NuxtLink to="/auth/login" class="btn btn-primary">
+            Get Started
+          </NuxtLink>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { useClipboard, usePermission } from "@vueuse/core";
-
-const input = ref(
-  "git clone https://github.com/kalix127/Nuxt3-LuciaAuth-Template.git",
-);
-const { copy } = useClipboard();
-
-const copied = ref(false);
-
-const handleCopy = () => {
-  copy(input.value);
-  copied.value = true;
-  setTimeout(() => {
-    copied.value = false;
-  }, 1000);
-};
-</script>
 
 <style>
 .custom-disabled:disabled {

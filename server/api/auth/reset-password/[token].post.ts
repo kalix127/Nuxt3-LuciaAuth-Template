@@ -1,9 +1,7 @@
-import { isWithinExpirationDate } from "oslo";
-import { hash } from "@node-rs/argon2";
-import { sha256 } from "oslo/crypto";
-import { encodeHex } from "oslo/encoding";
-import { PrismaClient } from "@prisma/client";
-import { confirmResetPasswordValidationSchema } from "~/validations/auth";
+import { hash } from '@node-rs/argon2';
+import { PrismaClient } from '@prisma/client';
+import { isWithinExpirationDate } from 'oslo';
+import { confirmResetPasswordValidationSchema } from '~/validations/auth';
 
 const prisma = new PrismaClient();
 
@@ -14,13 +12,13 @@ export default defineEventHandler(async (event) => {
 
   // Check for validation errors
   if (validatedData.errors.length > 0) {
-    let newErrors: Record<string, string> = {};
+    const newErrors: Record<string, string> = {};
     validatedData.errors.forEach((error: any) => {
       newErrors[error.path] = error.errors[0];
     });
     throw createError({
       statusCode: 400,
-      message: "Validation failed",
+      message: 'Validation failed',
       data: newErrors,
     });
   }
@@ -49,9 +47,9 @@ export default defineEventHandler(async (event) => {
   if (!token || !isWithinExpirationDate(token.expiresAt)) {
     throw createError({
       statusCode: 400,
-      message: "Token is invalid or expired",
+      message: 'Token is invalid or expired',
       data: {
-        token: "Token is invalid or expired",
+        token: 'Token is invalid or expired',
       },
     });
   }
@@ -63,7 +61,7 @@ export default defineEventHandler(async (event) => {
     outputLen: 32,
   });
 
-  const transaction = await prisma.$transaction([
+  await prisma.$transaction([
     prisma.user.update({
       where: {
         id: userId,
@@ -74,7 +72,7 @@ export default defineEventHandler(async (event) => {
     }),
     prisma.session.deleteMany({
       where: {
-        userId: userId,
+        userId,
       },
     }),
   ]);
@@ -82,7 +80,7 @@ export default defineEventHandler(async (event) => {
   const session = await lucia.createSession(userId, {});
   appendHeader(
     event,
-    "Set-Cookie",
+    'Set-Cookie',
     lucia.createSessionCookie(session.id).serialize(),
   );
 

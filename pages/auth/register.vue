@@ -1,26 +1,26 @@
 <script lang="ts" setup>
-import { useForm, useField } from "vee-validate";
-import { registerValidationSchema } from "~/validations/auth";
-import type { RegisterFormData } from "~/validations/auth";
+import type { RegisterFormData } from '~/validations/auth';
+import { useField, useForm } from 'vee-validate';
+import { registerValidationSchema } from '~/validations/auth';
 
 definePageMeta({
-  layout: "auth",
+  layout: 'auth',
 });
 
 useSeoMeta({
-  title: "Register",
-  description: "Create an account",
+  title: 'Register',
+  description: 'Create an account',
 });
 
 const { handleSubmit, errors, setErrors } = useForm({
   validationSchema: registerValidationSchema,
 });
 
-const { value: username } = useField("username");
-const { value: email } = useField("email");
-const { value: password } = useField("password");
-const { value: confirmPassword } = useField("confirmPassword");
-const { value: privacyPolicy } = useField("privacyPolicy");
+const { value: username } = useField('username');
+const { value: email } = useField('email');
+const { value: password } = useField('password');
+const { value: confirmPassword } = useField('confirmPassword');
+const { value: privacyPolicy } = useField('privacyPolicy');
 
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
@@ -30,11 +30,11 @@ const onSubmit = handleSubmit(async (values: RegisterFormData) => {
   isLoading.value = true;
   try {
     // If validation passes, send the request
-    const response: Response = await $fetch("/api/auth/register", {
-      method: "POST",
+    const response: Response = await $fetch('/api/auth/register', {
+      method: 'POST',
       body: values,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
@@ -43,18 +43,18 @@ const onSubmit = handleSubmit(async (values: RegisterFormData) => {
 
     // If the response is ok, send the email verification
     if (response.ok) {
-      await $fetch("/api/auth/email-verification", {
-        method: "POST",
+      await $fetch('/api/auth/email-verification', {
+        method: 'POST',
         body: {
           email: values.email,
         },
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
     }
 
-    await navigateTo("/protected");
+    await navigateTo('/protected');
   } catch (error: any) {
     const errors = error.data.data;
 
@@ -70,7 +70,7 @@ const onSubmit = handleSubmit(async (values: RegisterFormData) => {
     <h1 class="mb-2 text-center text-3xl font-bold text-white">
       Create an account
     </h1>
-    <form @submit.prevent="onSubmit" class="flex flex-col gap-2">
+    <form class="flex flex-col gap-2" @submit.prevent="onSubmit">
       <label class="form-control w-full max-w-xs">
         <div class="label">
           <span class="label-text">Username</span>
@@ -85,7 +85,7 @@ const onSubmit = handleSubmit(async (values: RegisterFormData) => {
             placeholder="example"
             class="grow"
             :disabled="isLoading"
-          />
+          >
         </div>
 
         <div class="label">
@@ -108,7 +108,7 @@ const onSubmit = handleSubmit(async (values: RegisterFormData) => {
             placeholder="example@example.com"
             class="grow"
             :disabled="isLoading"
-          />
+          >
         </div>
         <div class="label">
           <span class="label-text-alt w-full text-sm text-red-500">
@@ -131,15 +131,15 @@ const onSubmit = handleSubmit(async (values: RegisterFormData) => {
             class="grow"
             :type="showPassword ? 'text' : 'password'"
             :disabled="isLoading"
-          />
+          >
           <button
             aria-label="Toggle password visibility"
             type="button"
             class="flex items-center justify-center"
             @click="showPassword = !showPassword"
           >
-            <Icon name="mdi:eye" size="20" v-if="!showPassword" />
-            <Icon name="mdi:eye-off" size="20" v-else />
+            <Icon v-if="!showPassword" name="mdi:eye" size="20" />
+            <Icon v-else name="mdi:eye-off" size="20" />
           </button>
         </div>
 
@@ -164,15 +164,15 @@ const onSubmit = handleSubmit(async (values: RegisterFormData) => {
             class="grow"
             :type="showConfirmPassword ? 'text' : 'password'"
             :disabled="isLoading"
-          />
+          >
           <button
             aria-label="Toggle password visibility"
             type="button"
             class="flex items-center justify-center"
             @click="showConfirmPassword = !showConfirmPassword"
           >
-            <Icon name="mdi:eye" size="20" v-if="!showConfirmPassword" />
-            <Icon name="mdi:eye-off" size="20" v-else />
+            <Icon v-if="!showConfirmPassword" name="mdi:eye" size="20" />
+            <Icon v-else name="mdi:eye-off" size="20" />
           </button>
         </div>
 
@@ -186,14 +186,13 @@ const onSubmit = handleSubmit(async (values: RegisterFormData) => {
       <div class="form-control">
         <label class="label cursor-pointer justify-start gap-4">
           <input
-            name="privacyPolicy"
             v-model="privacyPolicy"
+            name="privacyPolicy"
             type="checkbox"
             class="checkbox-primary checkbox"
             :disabled="isLoading"
-          />
-          <span class="label-text"
-            >I accept the
+          >
+          <span class="label-text">I accept the
             <span class="text-primary underline"> Privacy Policy </span>
           </span>
         </label>
@@ -210,13 +209,15 @@ const onSubmit = handleSubmit(async (values: RegisterFormData) => {
         :disabled="isLoading"
       >
         Continue
-        <Icon name="line-md:loading-twotone-loop" size="24" v-if="isLoading" />
+        <Icon v-if="isLoading" name="line-md:loading-twotone-loop" size="24" />
       </button>
     </form>
 
     <div class="flex flex-col border-opacity-50">
-      <div class="divider text-xs">OR CONTINUE WITH</div>
-      <div class="flex gap-4 justify-center">
+      <div class="divider text-xs">
+        OR CONTINUE WITH
+      </div>
+      <div class="flex justify-center gap-4">
         <a
           href="/login/github"
           class="btn btn-outline btn-neutral grow"
@@ -238,7 +239,9 @@ const onSubmit = handleSubmit(async (values: RegisterFormData) => {
 
     <p class="text-muted-foreground text-center text-sm">
       Already registered?
-      <NuxtLink href="/auth/login" class="link link-primary font-bold">Sign In</NuxtLink>
+      <NuxtLink href="/auth/login" class="link link-primary font-bold">
+        Sign In
+      </NuxtLink>
     </p>
   </div>
 </template>

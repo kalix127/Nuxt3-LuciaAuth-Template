@@ -1,7 +1,7 @@
-import { generateIdFromEntropySize } from "lucia";
-import { OAuth2RequestError } from "arctic";
-import { PrismaClient } from "@prisma/client";
-import { google } from "~/server/utils/auth";
+import { PrismaClient } from '@prisma/client';
+import { OAuth2RequestError } from 'arctic';
+import { generateIdFromEntropySize } from 'lucia';
+import { google } from '~/server/utils/auth';
 
 const prisma = new PrismaClient();
 
@@ -9,32 +9,32 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const { state = null, code = null } = query;
 
-  const codeVerifier = getCookie(event, "codeVerifier") ?? null;
-  const storedState = getCookie(event, "google_oauth_state") ?? null;
+  const codeVerifier = getCookie(event, 'codeVerifier') ?? null;
+  const storedState = getCookie(event, 'google_oauth_state') ?? null;
 
   if (
-    !code ||
-    !codeVerifier ||
-    !state ||
-    !storedState ||
-    state !== storedState
+    !code
+    || !codeVerifier
+    || !state
+    || !storedState
+    || state !== storedState
   ) {
     throw createError({
       status: 400,
-      message: "Invalid state or code",
+      message: 'Invalid state or code',
     });
   }
 
   try {
-    const { accessToken, idToken } = await google.validateAuthorizationCode(
+    const { accessToken } = await google.validateAuthorizationCode(
       code,
       codeVerifier,
     );
 
     const googleUserResponse = await fetch(
-      "https://www.googleapis.com/oauth2/v1/userinfo",
+      'https://www.googleapis.com/oauth2/v1/userinfo',
       {
-        method: "GET",
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -50,7 +50,7 @@ export default defineEventHandler(async (event) => {
       },
       include: {
         google: true,
-      }
+      },
     });
 
     // If the user has already an account, but not linked to Google, link the accounts
@@ -69,10 +69,10 @@ export default defineEventHandler(async (event) => {
       const session = await lucia.createSession(existingUser.id, {});
       appendHeader(
         event,
-        "Set-Cookie",
+        'Set-Cookie',
         lucia.createSessionCookie(session.id).serialize(),
       );
-      return sendRedirect(event, "/");
+      return sendRedirect(event, '/');
     }
 
     // If GoogleUser does not exist, create a new user and GoogleUser
@@ -103,24 +103,24 @@ export default defineEventHandler(async (event) => {
     const session = await lucia.createSession(newUser.id, {});
     appendHeader(
       event,
-      "Set-Cookie",
+      'Set-Cookie',
       lucia.createSessionCookie(session.id).serialize(),
     );
-    return sendRedirect(event, "/protected");
+    return sendRedirect(event, '/protected');
   } catch (e) {
     if (
-      e instanceof OAuth2RequestError &&
-      e.message === "bad_verification_code"
+      e instanceof OAuth2RequestError
+      && e.message === 'bad_verification_code'
     ) {
       // invalid code
       throw createError({
         status: 400,
-        message: "Invalid code",
+        message: 'Invalid code',
       });
     }
     throw createError({
       status: 500,
-      message: "Internal Server Error",
+      message: 'Internal Server Error',
     });
   }
 });

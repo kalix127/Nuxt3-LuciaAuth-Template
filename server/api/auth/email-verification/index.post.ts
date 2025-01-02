@@ -1,8 +1,7 @@
-import { TimeSpan, createDate } from "oslo";
-import { generateIdFromEntropySize } from "lucia";
-import { PrismaClient } from "@prisma/client";
-import { sendResetPasswordValidationSchema } from "~/validations/auth";
-import { MailtrapClient } from "mailtrap";
+import { PrismaClient } from '@prisma/client';
+import { generateIdFromEntropySize } from 'lucia';
+import { MailtrapClient } from 'mailtrap';
+import { createDate, TimeSpan } from 'oslo';
 
 const prisma = new PrismaClient();
 
@@ -13,12 +12,12 @@ async function createEmailVerificationLink(
   // optionally invalidate all existing tokens
   await prisma.emailVerificationToken.deleteMany({
     where: {
-      userId: userId,
+      userId,
     },
   });
 
   const token = generateIdFromEntropySize(25); // 40 characters long
-  const expiresAt = createDate(new TimeSpan(2, "h")); // Expires in 2 hours
+  const expiresAt = createDate(new TimeSpan(2, 'h')); // Expires in 2 hours
 
   await prisma.emailVerificationToken.create({
     data: {
@@ -45,8 +44,8 @@ async function sendVerificationEmail(
   const mailtrapEndpoint = config.mailtrapEndpoint;
   const mailtrapSender = config.mailtrapSender;
   const mailtrapPassword = config.mailtrapPassword;
-  const mailtrapTemplateUuidVerifyEmail =
-    config.mailtrapTemplateUuidVerifyEmail;
+  const mailtrapTemplateUuidVerifyEmail
+    = config.mailtrapTemplateUuidVerifyEmail;
 
   const companyName = config.companyName;
   const companySupportEmail = config.companySupportEmail;
@@ -56,7 +55,7 @@ async function sendVerificationEmail(
     endpoint: mailtrapEndpoint,
   });
 
-  const emailSent = await client.send({
+  await client.send({
     from: { name: companyName, email: mailtrapSender },
     to: [{ email }],
     template_uuid: mailtrapTemplateUuidVerifyEmail,

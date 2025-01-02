@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import { useForm, useField } from "vee-validate";
-import { loginValidationSchema } from "~/validations/auth";
-import type { LoginFormData } from "~/validations/auth";
+import type { LoginFormData } from '~/validations/auth';
+import { useField, useForm } from 'vee-validate';
+import { loginValidationSchema } from '~/validations/auth';
 
 definePageMeta({
-  layout: "auth",
+  layout: 'auth',
 });
 
 useSeoMeta({
-  title: "Login",
-  description: "Login to your account",
+  title: 'Login',
+  description: 'Login to your account',
 });
 
 const { handleSubmit, errors, setErrors } = useForm({
   validationSchema: loginValidationSchema,
 });
 
-const { value: email } = useField("email");
-const { value: password } = useField("password");
+const { value: email } = useField('email');
+const { value: password } = useField('password');
 
 const showPassword = ref(false);
 const isLoading = ref(false);
@@ -26,17 +26,17 @@ const onSubmit = handleSubmit(async (values: LoginFormData) => {
   isLoading.value = true;
   try {
     // If validation passes, send the request
-    await $fetch("/api/auth/login", {
-      method: "POST",
+    await $fetch('/api/auth/login', {
+      method: 'POST',
       body: values,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
     isLoading.value = false;
     // Navigate to the home page on success
-    await navigateTo("/protected");
+    await navigateTo('/protected');
   } catch (error: any) {
     const errors = error.data.data;
 
@@ -52,8 +52,7 @@ const onSubmit = handleSubmit(async (values: LoginFormData) => {
     <h1 class="mb-2 text-center text-3xl font-bold text-white">
       Login to your account
     </h1>
-    <form @submit.prevent="onSubmit" class="flex flex-col gap-2" aria-label="Login form">
-
+    <form class="flex flex-col gap-2" aria-label="Login form" @submit.prevent="onSubmit">
       <label class="form-control w-full max-w-xs">
         <div class="label">
           <span class="label-text">Email</span>
@@ -61,14 +60,14 @@ const onSubmit = handleSubmit(async (values: LoginFormData) => {
         <div class="input input-bordered flex items-center gap-2">
           <Icon name="material-symbols:mail-rounded" size="20" />
           <input
-            aria-label="Email"
             v-model="email"
+            aria-label="Email"
             name="email"
             type="email"
             placeholder="example@example.com"
             class="grow"
             :disabled="isLoading"
-          />
+          >
         </div>
         <div class="label">
           <span class="label-text-alt w-full text-sm text-red-500">
@@ -86,22 +85,22 @@ const onSubmit = handleSubmit(async (values: LoginFormData) => {
         <div class="input input-bordered flex items-center gap-2">
           <Icon name="material-symbols:key-vertical-rounded" size="20" />
           <input
-            aria-label="Password"
             v-model="password"
+            aria-label="Password"
             name="password"
             placeholder="password"
             class="grow"
             :type="showPassword ? 'text' : 'password'"
             :disabled="isLoading"
-          />
+          >
           <button
             aria-label="Toggle password visibility"
             type="button"
             class="flex items-center justify-center"
             @click="showPassword = !showPassword"
           >
-            <Icon name="mdi:eye" size="20" v-if="!showPassword" />
-            <Icon name="mdi:eye-off" size="20" v-else />
+            <Icon v-if="!showPassword" name="mdi:eye" size="20" />
+            <Icon v-else name="mdi:eye-off" size="20" />
           </button>
         </div>
 
@@ -118,12 +117,14 @@ const onSubmit = handleSubmit(async (values: LoginFormData) => {
         :disabled="isLoading"
       >
         Continue
-        <Icon name="line-md:loading-twotone-loop" size="24" v-if="isLoading" />
+        <Icon v-if="isLoading" name="line-md:loading-twotone-loop" size="24" />
       </button>
     </form>
 
     <div class="flex flex-col border-opacity-50">
-      <div class="divider text-xs">OR CONTINUE WITH</div>
+      <div class="divider text-xs">
+        OR CONTINUE WITH
+      </div>
       <div class="flex justify-center gap-4">
         <a
           href="/login/github"
@@ -146,7 +147,9 @@ const onSubmit = handleSubmit(async (values: LoginFormData) => {
 
     <p class="text-muted-foreground text-center text-sm">
       Don't have an account?
-      <NuxtLink href="/auth/register" class="link link-primary font-semibold">Register now</NuxtLink>
+      <NuxtLink href="/auth/register" class="link link-primary font-semibold">
+        Register now
+      </NuxtLink>
     </p>
   </div>
 </template>

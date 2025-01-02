@@ -1,19 +1,19 @@
-import { TimeSpan, createDate } from "oslo";
-import { generateIdFromEntropySize } from "lucia";
-import { PrismaClient } from "@prisma/client";
-import { sendResetPasswordValidationSchema } from "~/validations/auth";
-import { MailtrapClient } from "mailtrap";
+import { PrismaClient } from '@prisma/client';
+import { generateIdFromEntropySize } from 'lucia';
+import { MailtrapClient } from 'mailtrap';
+import { createDate, TimeSpan } from 'oslo';
+import { sendResetPasswordValidationSchema } from '~/validations/auth';
 
 const prisma = new PrismaClient();
 
 async function createPasswordResetLink(userId: string): Promise<string> {
   await prisma.passwordResetToken.deleteMany({
     where: {
-      userId: userId,
+      userId,
     },
   });
   const token = generateIdFromEntropySize(25); // 40 character
-  const expiresAt = createDate(new TimeSpan(2, "h")); // 2 hours from now
+  const expiresAt = createDate(new TimeSpan(2, 'h')); // 2 hours from now
 
   await prisma.passwordResetToken.create({
     data: {
@@ -39,8 +39,8 @@ async function sendPasswordResetEmail(
   const mailtrapEndpoint = config.mailtrapEndpoint;
   const mailtrapSender = config.mailtrapSender;
   const mailtrapPassword = config.mailtrapPassword;
-  const mailtrapTemplateUuidResetPassword =
-    config.mailtrapTemplateUuidResetPassword;
+  const mailtrapTemplateUuidResetPassword
+    = config.mailtrapTemplateUuidResetPassword;
 
   const companyName = config.companyName;
   const companySupportEmail = config.companySupportEmail;
@@ -50,7 +50,7 @@ async function sendPasswordResetEmail(
     endpoint: mailtrapEndpoint,
   });
 
-  const emailSent = await client.send({
+  await client.send({
     from: { name: companyName, email: mailtrapSender },
     to: [{ email }],
     template_uuid: mailtrapTemplateUuidResetPassword,
@@ -70,13 +70,13 @@ export default defineEventHandler(async (event) => {
 
   // Check for validation errors
   if (validatedData.errors.length > 0) {
-    let newErrors: Record<string, string> = {};
+    const newErrors: Record<string, string> = {};
     validatedData.errors.forEach((error: any) => {
       newErrors[error.path] = error.errors[0];
     });
     throw createError({
       statusCode: 400,
-      message: "Validation failed",
+      message: 'Validation failed',
       data: newErrors,
     });
   }

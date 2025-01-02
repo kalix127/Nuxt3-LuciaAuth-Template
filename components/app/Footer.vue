@@ -1,3 +1,5 @@
+<script lang="ts" setup></script>
+
 <template>
   <footer class="footer footer-center bg-base-200 p-4 text-base-content">
     <div class="flex flex-col items-center sm:flex-row">
@@ -8,13 +10,10 @@
           href="https://github.com/kalix127"
           target="_blank"
           class="link"
-          >Gianluca Iavicoli</a
-        >
+        >Gianluca Iavicoli</a>
       </div>
     </div>
   </footer>
 </template>
-
-<script lang="ts" setup></script>
 
 <style></style>
