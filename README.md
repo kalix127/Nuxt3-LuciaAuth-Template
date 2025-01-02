@@ -4,19 +4,6 @@ A Nuxt.js Authentication template (login, register, email validation, reset pass
 
 ⚠️ **Note:** Please be aware that Lucia-Auth is scheduled to be deprecated in March 2025. For more details, refer to [Lucia-Auth Deprecation Discussion](https://github.com/lucia-auth/lucia/discussions/1714).
 
-## Tech Stack:
-
-[![Vercel](https://img.shields.io/badge/Vercel-Deployment-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/docs)
-[![Nuxt.js](https://img.shields.io/badge/Nuxt.js-3-00DC82?style=for-the-badge&logo=nuxtdotjs&logoColor=white)](https://nuxt.com/docs/getting-started/introduction)
-[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/docs/)
-[![Lucia](https://img.shields.io/badge/Lucia-Auth-20A1A1?style=for-the-badge&logo=auth0&logoColor=white)](https://lucia-auth.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-DB-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/docs/)
-[![Zod](https://img.shields.io/badge/Zod-Validation-6200EE?style=for-the-badge&logo=zod&logoColor=white)](https://zod.dev/)
-[![VeeValidate](https://img.shields.io/badge/VeeValidate-Validation-4FC08D?style=for-the-badge&logo=veevalidate&logoColor=white)](https://vee-validate.logaretm.com/)
-[![Mailtrap](https://img.shields.io/badge/Mailtrap-Email_Service-000000?style=for-the-badge&logo=mailtrap&logoColor=white)](https://mailtrap.io/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-Framework-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/docs)
-[![DaisyUI](https://img.shields.io/badge/DaisyUI-UI_Framework-FF00FF?style=for-the-badge&logo=daisyui&logoColor=white)](https://daisyui.com/)
-
 ## Features
 
 ### Authentication
